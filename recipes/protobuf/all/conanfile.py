@@ -28,6 +28,7 @@ class ProtobufConan(ConanFile):
         "fPIC": [True, False],
         "with_zlib": [True, False],
         "with_rtti": [True, False],
+        "with_protoc_binaries": [True, False],
         "lite": [True, False],
         "debug_suffix": [True, False],
     }
@@ -36,6 +37,7 @@ class ProtobufConan(ConanFile):
         "fPIC": True,
         "with_zlib": True,
         "with_rtti": True,
+        "with_protoc_binaries": True,
         "lite": False,
         "debug_suffix": True,
     }
@@ -114,7 +116,7 @@ class ProtobufConan(ConanFile):
         cmake.definitions["CMAKE_INSTALL_CMAKEDIR"] = self._cmake_install_base_path.replace("\\", "/")
         cmake.definitions["protobuf_WITH_ZLIB"] = self.options.with_zlib
         cmake.definitions["protobuf_BUILD_TESTS"] = False
-        cmake.definitions["protobuf_BUILD_PROTOC_BINARIES"] = True
+        cmake.definitions["protobuf_BUILD_PROTOC_BINARIES"] = self.options.with_protoc_binaries
         if not self.options.debug_suffix:
             cmake.definitions["protobuf_DEBUG_POSTFIX"] = ""
         if Version(self.version) >= "3.14.0":
